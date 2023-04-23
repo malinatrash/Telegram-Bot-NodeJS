@@ -3,22 +3,22 @@ const token = '6056777966:AAEY135JblK0EUlFoG-W38GvZt7F126RO4s'
 const bot = new TelegramApi(token, {polling: true})
 
 const gameKeyboard = [
-    [{text: '🗿'}, {text: '✂'}], [{text: '🧻'}]
+    [{text: '🗿'}, {text: '️️✂'}], [{text: '🧻'}]
 ]
 
 const menuKeyboard = [
-    [{text: 'Начать игру'}, {text: 'Иноформация'}], [{text: '🧻'}]
+    [{text: 'Начать игру'}]
 ]
 
-const STONE = "STONE"
-const CUTTER = "CUTTER"
-const PAPER = "PAPER"
+const STONE = "🗿"
+const CUTTER = "️✂"
+const PAPER = "🧻"
 
 const start = () => {
     bot.on('message', msg => {
         const text = msg.text
         const chatId = msg.chat.id
-
+        console.log(msg)
         switch (text) {
             case '/start':
                 const helloText = 'Welcome to malinatrash`s TelegramBot'
@@ -27,32 +27,38 @@ const start = () => {
                 return bot.sendMessage(
                     chatId,
                     helloText,
-                    { reply_markup: {
+                    {
+                        reply_markup: {
                             keyboard: menuKeyboard,
                             one_time_keyboard: true
                         }
                     })
-            case "/game":
+            case "Начать игру":
                 bot.sendMessage(
                     chatId,
                     'Выберите действие',
-                    { reply_markup: {
-                        keyboard: gameKeyboard,
-                        one_time_keyboard: true
-                    }
-                })
+                    {
+                        reply_markup: {
+                            keyboard: gameKeyboard,
+                            one_time_keyboard: true
+                        }
+                    })
                 break
             case "🗿":
                 startGame("🗿", chatId)
                 break
-            case "✂️":
-                startGame("✂️", chatId)
+            case "️️✂":
+                startGame("️✂", chatId)
                 break
             case "🧻":
                 startGame("🧻", chatId)
                 break
             default:
-                bot.sendMessage(chatId, "Неизвестнавя команда").then(r => {
+                bot.sendMessage(chatId, "Неизвестнавя команда", {
+                    reply_markup: {
+                        keyboard: menuKeyboard,
+                        one_time_keyboard: true
+                    }
                 })
 
         }
@@ -62,7 +68,7 @@ const start = () => {
 const startGame = (value, chatId) => {
     let res
     switch (value) {
-        case "✂️":
+        case "️✂":
             res = CUTTER
             break
         case "🗿":
@@ -83,9 +89,9 @@ const startGame = (value, chatId) => {
         default:
             bot_res = PAPER
     }
+    bot.sendMessage(chatId, bot_res)
     if (bot_res === res) {
-        bot.sendMessage("Ничья")
-        return
+        bot.sendMessage(chatId, "Ничья")
     }
     if (bot_res === PAPER && res === STONE) {
         bot.sendMessage(chatId, "Ты проиграл!")
@@ -97,9 +103,18 @@ const startGame = (value, chatId) => {
         bot.sendMessage(chatId, "Ты выиграл!")
     } else if (bot_res === CUTTER && res === PAPER) {
         bot.sendMessage(chatId, "Ты проиграл!")
-    }  else if (bot_res === CUTTER && res === STONE) {
+    } else if (bot_res === CUTTER && res === STONE) {
         bot.sendMessage(chatId, "Ты выиграл!")
     }
+    bot.sendMessage(
+        chatId,
+        "Давай еще раз?",
+        {
+            reply_markup: {
+                keyboard: menuKeyboard,
+                one_time_keyboard: true
+            }
+        })
 }
 //
 
