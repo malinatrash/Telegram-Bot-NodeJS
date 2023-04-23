@@ -101,5 +101,6 @@ const startGame = (value, chatId) => {
         bot.sendMessage(chatId, "Ты выиграл!")
     }
 }
+//
 
 start()
