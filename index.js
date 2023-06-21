@@ -6,6 +6,7 @@ const gameKeyboard = [
     [{text: '🗿'}, {text: '️️✂'}], [{text: '🧻'}]
 ]
 
+
 const menuKeyboard = [
     [{text: 'Начать игру'}]
 ]
