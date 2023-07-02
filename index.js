@@ -2,6 +2,7 @@ const TelegramApi = require('node-telegram-bot-api')
 const token = '6056777966:AAEY135JblK0EUlFoG-W38GvZt7F126RO4s'
 const bot = new TelegramApi(token, {polling: true})
 
+
 const gameKeyboard = [
     [{text: '🗿'}, {text: '️️✂'}], [{text: '🧻'}]
 ]
